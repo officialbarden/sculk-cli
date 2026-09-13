@@ -1,3 +1,3 @@
-package init
+package initProject
 
 func Main() {}
