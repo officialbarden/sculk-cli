@@ -1,0 +1,3 @@
+package install
+
+func Main() {}

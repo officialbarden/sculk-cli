@@ -4,8 +4,7 @@ Copyright © 2026 barden <theofficialbarden@gmail.com>
 package cmd
 
 import (
-	"fmt"
-
+	"sculk-cli/src/update"
 	"github.com/spf13/cobra"
 )
 
@@ -15,7 +14,9 @@ var updateCmd = &cobra.Command{
 	Short: "Update specific/all libraries to their latest subversion.",
 	Long: `Update specific/all libraries to their latest subversion for project's specified game version.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("update called")
+
+		// Command Execution
+		update.Main()
 	},
 }
 

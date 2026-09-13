@@ -1,5 +1,5 @@
 /*
-Copyright © 2026 BARDEN <theofficialbarden@protonmail.com>
+Copyright © 2026 BARDEN <theofficialbarden@gmail.com>
 
 */
 package cmd
@@ -14,9 +14,9 @@ import (
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "sculk",
-	Short: "a CLI-app to speed up project initialization.",
+	Short: "a CLI-app to speed up project initialization, simplify library management.",
 	Long: `
-a CLI-app to speed up project initialization. Write productive mcfunction.
+a CLI-app to speed up project initialization, simplify library management. Write productive mcfunction.
 	`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:

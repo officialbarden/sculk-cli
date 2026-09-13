@@ -4,7 +4,7 @@ Copyright © 2026 barden <theofficialbarden@gmail.com>
 package cmd
 
 import (
-	"fmt"
+	"sculk-cli/src/install"
 
 	"github.com/spf13/cobra"
 )
@@ -13,9 +13,10 @@ import (
 var installCmd = &cobra.Command{
 	Use:   "install",
 	Short: "Install all libraries specified in libraries.json",
-	Long: `Install all libraries specified in libraries.json`,
+	Long:  `Install all libraries specified in libraries.json`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("install called")
+		// Command Execution
+		install.Main()
 	},
 }
 

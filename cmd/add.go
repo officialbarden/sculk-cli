@@ -5,6 +5,8 @@ package cmd
 
 import (
 	"fmt"
+	"sculk-cli/src/add"
+
 	"github.com/spf13/cobra"
 )
 
@@ -12,7 +14,7 @@ import (
 var addCmd = &cobra.Command{
 	Use:   "add [...libraryName]",
 	Short: "Add a library (or multiple libraries) to your project.",
-	Args: cobra.MinimumNArgs(1),
+	Args:  cobra.MinimumNArgs(1),
 	Long: `
 Add a library to your project. See more here: officialbarden.github.io/sculk/libraries
 	`,
@@ -20,7 +22,10 @@ Add a library to your project. See more here: officialbarden.github.io/sculk/lib
 
 		// libraryName is a list of names so user can download multiple libraries.
 		libraryName = args
-		
+
+		// Command Execution
+		add.Main()
+
 		fmt.Println("add called")
 		return nil
 	},

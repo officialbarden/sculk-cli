@@ -5,6 +5,7 @@ package cmd
 
 import (
 	"fmt"
+	"sculk-cli/src/initProject"
 
 	"github.com/spf13/cobra"
 )
@@ -18,14 +19,13 @@ Initialise a new project, add libraries from github, write standard necessary co
 	`,
 	Args: cobra.ExactArgs(2),
 	RunE: func(cmd *cobra.Command, args []string) error {
-
-		// sculk init --rp/--dp projectName 26.3
-		// fmt.Println(args)
-
 		projectName := args[0]
 		projectVersion := args[1]
-
 		fmt.Println(projectName, projectVersion)
+
+		// Command Execution
+		initProject.Main()
+
 		return nil
 	},
 }
@@ -34,17 +34,10 @@ Initialise a new project, add libraries from github, write standard necessary co
 var resourcepackProject bool = false
 var datapackProject bool = false
 
-// var projectName string = "sculk-project"
-// var projectVersion string = "26.3"
-
 func init() {
 	rootCmd.AddCommand(initCmd)
-
 	// either '--dp' or '--rp'
 	initCmd.Flags().BoolVar(&resourcepackProject, "rp", resourcepackProject, "Initializes a 'Resourcepack' project.")
 	initCmd.Flags().BoolVar(&datapackProject, "dp", datapackProject, "Initializes a 'Datapack' project.")
 	initCmd.MarkFlagsMutuallyExclusive("dp", "rp")
-
-	// initCmd.Flags().StringVar(&projectName, "name", projectName, "Give a Project Name for generated project.")
-	// initCmd.Flags().StringVar(&projectVersion, "version", projectVersion, "Give the Game Version for generated project.")
 }

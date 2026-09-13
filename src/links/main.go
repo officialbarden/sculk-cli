@@ -1,0 +1,3 @@
+package links
+
+func Main() {}

@@ -4,7 +4,7 @@ Copyright © 2026 barden <theofficialbarden@gmail.com>
 package cmd
 
 import (
-	"fmt"
+	"sculk-cli/src/uninstall"
 
 	"github.com/spf13/cobra"
 )
@@ -12,10 +12,11 @@ import (
 // uninstallCmd represents the uninstall command
 var uninstallCmd = &cobra.Command{
 	Use:   "uninstall [...libraryName]?",
-	Short: "Uninstall specified or all libraries specified in libraries.json",
-	Long: `Uninstall specified or all libraries specified in libraries.json`,
+	Short: "Uninstall specific/all libraries specified in libraries.json",
+	Long:  `Uninstall specific/all libraries specified in libraries.json`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("uninstall called")
+		// Command Execution
+		uninstall.Main()
 	},
 }
 
