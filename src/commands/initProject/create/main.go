@@ -1,8 +1,5 @@
+// THIS MODULE CREATES PACK.MCMETA
 package create
-
-import (
-	"sculk-cli/src/commands/initProject/packmcmeta"
-)
 
 func CreateSculkProject(args []string, flags map[string]bool) error {
 	projectVersion := args[1]
@@ -16,6 +13,6 @@ func CreateSculkProject(args []string, flags map[string]bool) error {
 	}
 
 	// create pack.mcmeta file
-	err := packmcmeta.CreatePackMcmeta(projectVersion, projectType)
+	err := CreatePackMcmeta(projectVersion, projectType)
 	return err
 }

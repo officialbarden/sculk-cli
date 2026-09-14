@@ -1,4 +1,4 @@
-package packmcmeta
+package create
 
 import (
 	"encoding/json"
