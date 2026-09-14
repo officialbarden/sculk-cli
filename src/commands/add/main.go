@@ -10,10 +10,6 @@ import (
 
 func Main(ignoreVersionMismatch bool, args []string) error { 
 	libraries := args
-
-	
-	// 1. Clone the "Github Repo" into memory
 	GetLibraries(libraries)
-
 	return nil
 }

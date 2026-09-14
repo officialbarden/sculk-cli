@@ -5,6 +5,7 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/go-git/go-billy/v6"
 	"github.com/go-git/go-billy/v6/memfs"
@@ -46,9 +47,9 @@ func MergeIndividualFiles(fs billy.Filesystem, currentPath string, targetDir str
 	for _, file := range files {
 
 		// skip LICENSE file
-		if file.Name() == "LICENSE" {
-			continue
-		}
+		// if file.Name() == "LICENSE" {
+		// 	continue
+		// }
 		
 		// store memory path and local path
 		memoryPath := filepath.Join(currentPath, file.Name())
@@ -86,7 +87,24 @@ func handleFileMerging(fs billy.Filesystem, sourcePath string, destinationPath s
 
 
 	// if file already exists, append contents to the top of the file.
-	if _, err := os.Stat(destinationPath); err == nil {
+	if fileInfo, err := os.Stat(destinationPath); err == nil {
+
+		fileName := strings.Split(fileInfo.Name(), ".");
+		fileExtension := ""
+		for i := range fileName {
+
+			if i == len(fileName) - 1 {
+				fileExtension = fileName[i];
+			}
+
+		}
+		if fileExtension == "json" {
+			// Special Logic for JSON files:
+			
+			
+			return nil	// to break out of the overarching loop
+		}
+		
 		existingData, err := os.ReadFile(destinationPath);
 		if err != nil {
 			fmt.Println("here is panic")
