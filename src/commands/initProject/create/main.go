@@ -1,6 +1,10 @@
 // THIS MODULE CREATES PACK.MCMETA
 package create
 
+import (
+	"os/user"
+)
+
 func CreateSculkProject(args []string, flags map[string]bool) error {
 
 	projectName := args[0]
@@ -15,7 +19,12 @@ func CreateSculkProject(args []string, flags map[string]bool) error {
 	}
 
 	// create libraries.json
-	// CreateLibrariesJson()
+	user, err := user.Current()
+	if err != nil {
+		panic(err)
+	}
+		
+	CreateLibrariesJson(user.Name, projectVersion)
 
 	// actually create files now
 	switch projectType {
@@ -26,6 +35,6 @@ func CreateSculkProject(args []string, flags map[string]bool) error {
 	}
 
 	// create pack.mcmeta file
-	err := CreatePackMcmeta(projectVersion, projectType)
+	err = CreatePackMcmeta(projectVersion, projectType)
 	return err
 }

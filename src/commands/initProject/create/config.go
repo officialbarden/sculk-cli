@@ -2,6 +2,7 @@
 package create
 
 import (
+	"encoding/json"
 	"os"
 	"path/filepath"
 )
@@ -17,11 +18,10 @@ type Pack struct {
 }
 
 type DatapackFile struct {
-	DirName string
+	DirName  string
 	FileName string
-	Content []byte
+	Content  []byte
 }
-
 
 type ResourcepackFile struct {
 	DirName  string
@@ -29,7 +29,50 @@ type ResourcepackFile struct {
 	Content  []byte
 }
 
+type LibrariesDotJson struct {
+	Author      string    `json:"author"`       // Name of Author
+	Version     string    `json:"version"`      // version of the sculk project
+	GameVersion string    `json:"game_version"` // game version the sculk project is meant for - used to check versions while installing
+	Libraries   []Library `json:"libraries"`    // All Installed Libraries
+}
 
+type Library struct {
+	Identifier     string `json:"identifier"`   // Unique Identifier, handy for extremely popular packages.
+	Name           string `json:"name"`         // Name of the Library.
+	Source         string `json:"source"`       // A Git Repo Hosting Platform.
+	LibraryVersion string `json:"version"`      // version of the imported library.
+	GameVersion    string `json:"game_version"` // version of the game the library supports.
+}
+
+
+func CreateLibrariesJson(author string, gameVersion string) {
+	// get target path
+	targetPath, err := os.Getwd()
+	if err != nil {
+		panic(err)
+	}
+	// create libraries.json
+	path := filepath.Join(targetPath + "/libraries.json")
+	file, err := os.Create(path)
+	if err != nil {
+		panic(err)
+	}
+	// close file after program exits
+	defer file.Close()
+	// file
+	encoder := json.NewEncoder(file)
+	encoder.SetIndent("", "   ")
+
+	data := LibrariesDotJson{
+		Author: author,
+		Version: "1.0.0",
+		GameVersion: gameVersion,
+		Libraries: []Library{},
+	}
+
+	// Write to JSON.
+	encoder.Encode(data)
+} 
 
 func AddProjectNamespace(filePathPrefix string, namespace string, filePathSuffix string) string {
 	return filePathPrefix + namespace + filePathSuffix
@@ -48,7 +91,7 @@ func CreateDatapackFiles(files []DatapackFile) {
 		}
 
 		fullFilePath := filepath.Join(workingDir, files[i].DirName, files[i].FileName)
-		
+
 		file, err := os.Create(filepath.Join(fullFilePath))
 		if err != nil {
 			panic(err)
@@ -78,7 +121,7 @@ func CreateResourcepackFiles(files []ResourcepackFile) {
 
 		// put into variable
 		fullFilePath := filepath.Join(workingDir, files[i].DirName, files[i].FileName)
-		
+
 		file, err := os.Create(filepath.Join(workingDir, files[i].DirName, files[i].FileName))
 		if err != nil {
 			panic(err)
@@ -219,7 +262,6 @@ func GetDatapackFilesList(projectName string, projectVersion string) []DatapackF
 	}
 	return fileStructure[projectVersion]
 }
-
 
 func GetResourcepackFilesList(projectName string, projectVersion string) []ResourcepackFile {
 	fileStructure := map[string][]ResourcepackFile{
