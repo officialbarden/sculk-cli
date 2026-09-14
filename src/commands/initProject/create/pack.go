@@ -6,15 +6,7 @@ import (
 	"path/filepath"
 )
 
-// Defines pack.mcmeta format
-type Pack struct {
-	Pack_format int    `json:"pack_format"`
-	Description string `json:"description"`
-}
 
-type FileContent struct {
-	PackData Pack `json:"pack"`
-}
 
 func CreatePackMcmeta(projectVersion string, projectType string) error {
 
@@ -62,7 +54,7 @@ func writePackMcmeta(file *os.File, projectVersion string, projectType string) {
 	}
 	
 	// Construct pack.mcmeta
-	packFileContent := FileContent{
+	packFileContent := PackMcmetaFileContent{
 		PackData: Pack{
 			Pack_format: packFormatNumber,
 			Description: packDescription,
