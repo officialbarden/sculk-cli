@@ -99,9 +99,6 @@ func handleFileMerging(fs billy.Filesystem, sourcePath string, destinationPath s
 
 		}
 		if fileExtension == "json" {
-			// Special Logic for JSON files:
-			
-			
 			return nil	// to break out of the overarching loop
 		}
 		
