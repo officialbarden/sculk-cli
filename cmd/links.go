@@ -9,14 +9,16 @@ import (
 	"github.com/spf13/cobra"
 )
 
+
 // linksCmd represents the links command
 var linksCmd = &cobra.Command{
 	Use:   "links [...providers]?",
 	Short: "Get official links affiliated with sculk.",
 	Long:  `Get official links affiliated with sculk.`,
-	Run: func(cmd *cobra.Command, args []string) {
+	RunE: func(cmd *cobra.Command, args []string) error {
 		// Command Execution
-		links.Main()
+		output := links.Main(args)
+		return output
 	},
 }
 
