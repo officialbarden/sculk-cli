@@ -1,6 +1,7 @@
 package add
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 	"os"
@@ -73,6 +74,11 @@ func MergeIndividualFiles(fs billy.Filesystem, currentPath string, targetDir str
 	return nil
 }
 
+type FunctionTag struct {
+	Replace bool `json:"replace"`
+	Values []string `json:"values"`
+}
+
 func handleFileMerging(fs billy.Filesystem, sourcePath string, destinationPath string) error {
 	srcFile, err := fs.Open(sourcePath)
 	if err != nil {
@@ -99,7 +105,43 @@ func handleFileMerging(fs billy.Filesystem, sourcePath string, destinationPath s
 
 		}
 		if fileExtension == "json" {
-			return nil	// to break out of the overarching loop
+
+			if fileInfo.Name() == "load.json" || fileInfo.Name() == "tick.json" {
+
+				var sourceTagContent FunctionTag
+				var existingTagContent FunctionTag
+				
+				existingContent, err := os.ReadFile(destinationPath)
+				if err != nil {
+					panic(err)
+				}
+				
+				sourceContent, err := io.ReadAll(srcFile)
+				if err != nil {
+					panic(err)
+				}
+				
+				err = json.Unmarshal(sourceContent, &sourceTagContent)
+				if err != nil {
+					panic(err)
+				}
+
+				err = json.Unmarshal(existingContent, &existingTagContent)
+				if err != nil {
+					panic(err)
+				}
+
+				existingTagContent.Values = append(existingTagContent.Values, sourceTagContent.Values...)
+				combined, err := json.Marshal(existingTagContent)
+				if err != nil {
+					panic(err)
+				}
+				return os.WriteFile(destinationPath, combined, 0644)
+				
+			} else {
+				return nil
+			}
+			// return nil	// to break out of the overarching loop
 		}
 		
 		existingData, err := os.ReadFile(destinationPath);
