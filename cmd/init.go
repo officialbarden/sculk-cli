@@ -5,7 +5,6 @@ package cmd
 
 import (
 	"sculk-cli/src/commands/initProject"
-
 	"github.com/spf13/cobra"
 )
 
@@ -19,8 +18,13 @@ Initialise a new project, add libraries from github, write standard necessary co
 	Args: cobra.ExactArgs(2),
 	RunE: func(cmd *cobra.Command, args []string) error {
 
+		flags := map[string]bool{
+			"dp": datapackProject,
+			"rp": resourcepackProject,
+		}
+
 		// Command Execution
-		output := initProject.Main(args)
+		output := initProject.Main(args, flags)
 
 		return output
 	},
