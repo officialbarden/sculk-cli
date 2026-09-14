@@ -4,7 +4,7 @@ Copyright © 2026 barden <theofficialbarden@gmail.com>
 package cmd
 
 import (
-	"sculk-cli/src/update"
+	"sculk-cli/src/commands/update"
 	"github.com/spf13/cobra"
 )
 

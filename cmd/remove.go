@@ -4,7 +4,7 @@ Copyright © 2026 BARDEN <theofficialbarden@gmail.com>
 package cmd
 
 import (
-	"sculk-cli/src/remove"
+	"sculk-cli/src/commands/remove"
 
 	"github.com/spf13/cobra"
 )

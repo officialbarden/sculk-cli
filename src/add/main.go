@@ -1,3 +1,0 @@
-package add
-
-func Main() {}

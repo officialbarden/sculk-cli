@@ -4,8 +4,7 @@ Copyright © 2026 barden <theofficialbarden@gmail.com>
 package cmd
 
 import (
-	"fmt"
-	"sculk-cli/src/add"
+	"sculk-cli/src/commands/add"
 
 	"github.com/spf13/cobra"
 )
@@ -19,15 +18,9 @@ var addCmd = &cobra.Command{
 Add a library to your project. See more here: officialbarden.github.io/sculk/libraries
 	`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-
-		// libraryName is a list of names so user can download multiple libraries.
-		libraryName = args
-
 		// Command Execution
-		add.Main()
-
-		fmt.Println("add called")
-		return nil
+		output := add.Main(args)
+		return output
 	},
 }
 

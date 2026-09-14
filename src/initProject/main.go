@@ -1,3 +1,0 @@
-package initProject
-
-func Main() {}
