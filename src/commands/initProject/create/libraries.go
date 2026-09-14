@@ -1,8 +1,7 @@
 // Create the libraries.json file which stores sculk project data
 package create
 
-import (
-)
+import ()
 
 
 func libraryDataCreate() {}

@@ -20,10 +20,10 @@ func GetLibraries(libraries []string) {
 	if err != nil {
 		panic(err)
 	}
-	
+
 	for i := range libraries {
 		// use in-built hashmap to get src via acronym/identifiers
-		repoURL := VerifyLibraryIntegrity(libraries[i])
+		repoURL := VerifyLibraryIntegrity(libraries[i]).Source
 		
 		// clone repo on ram
 		fs := memfs.New()

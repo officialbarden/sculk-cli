@@ -11,5 +11,12 @@ import (
 func Main(ignoreVersionMismatch bool, args []string) error { 
 	libraries := args
 	GetLibraries(libraries)
+	
+	// add to libraries.json
+	err := AddToLibrariesJson(libraries)
+	if err != nil {
+		return err
+	}
+	
 	return nil
 }
