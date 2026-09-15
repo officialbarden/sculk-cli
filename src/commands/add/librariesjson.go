@@ -6,6 +6,7 @@ import (
 	"os"
 	"path/filepath"
 	"sculk-cli/src/commands/initProject/create"
+	"slices"
 )
 
 func AddToLibrariesJson(libraries []string) error {
@@ -35,6 +36,12 @@ func AddToLibrariesJson(libraries []string) error {
 	}
 
 	for i := range libraries {
+
+		// do not create duplicate library entries
+		if slices.Contains(librariesJson.Libraries, VerifyLibraryIntegrity(libraries[i])) {
+			continue;
+		}
+		
 		librariesJson.Libraries = append(librariesJson.Libraries, VerifyLibraryIntegrity(libraries[i]))
 	}
 	combined, err := json.MarshalIndent(librariesJson, "", "   ")
