@@ -25,15 +25,8 @@ func InstallLibraries(libraries []string, ignoreVersionMismatch bool) {
 	}
 
 	for i := range libraries {
-		// use in-built hashmap to get src via acronym/identifiers
-		repoURL := VerifyLibraryIntegrity(libraries[i]).Source
 		
-		// clone repo on ram
-		fs := memfs.New()
-		_, err := git.Clone(memory.NewStorage(), fs, &git.CloneOptions{
-			URL: repoURL,
-			Depth: 1,
-		})
+		_, fs, err := GetLibrarySource(libraries[i])
 		if err != nil {
 			panic(err)
 		}
@@ -45,6 +38,22 @@ func InstallLibraries(libraries []string, ignoreVersionMismatch bool) {
 		
 		err = MergeIndividualFiles(fs, "/", workingDir)
 	}
+}
+
+func GetLibrarySource(libraryIdentifier string) (repo string, fs billy.Filesystem, error error) {
+	// use in-built hashmap to get src via acronym/identifiers
+	repoURL := VerifyLibraryIntegrity(libraryIdentifier).Source
+	
+	// clone repo on ram
+	filesys := memfs.New()
+	_, err := git.Clone(memory.NewStorage(), fs, &git.CloneOptions{
+		URL: repoURL,
+		Depth: 1,
+	})
+	if err != nil {
+		panic(err)
+	}
+	return repoURL, filesys, err
 }
 
 func gameVersionIncompat(fs billy.Filesystem) bool {

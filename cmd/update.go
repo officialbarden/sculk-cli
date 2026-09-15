@@ -16,7 +16,7 @@ var updateCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 
 		// Command Execution
-		update.Main()
+		update.Main(args)
 	},
 }
 
