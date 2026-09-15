@@ -14,7 +14,7 @@ import (
 	"github.com/go-git/go-git/v6/storage/memory"
 )
 
-func GetLibraries(libraries []string) {
+func InstallLibraries(libraries []string) {
 
 	workingDir, err := os.Getwd()
 	if err != nil {

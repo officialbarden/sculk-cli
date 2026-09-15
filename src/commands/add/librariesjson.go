@@ -41,3 +41,4 @@ func AddToLibrariesJson(libraries []string) error {
 
 	return os.WriteFile(jsonPath, combined, 0644)
 }
+
