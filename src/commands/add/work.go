@@ -6,6 +6,7 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"slices"
 	"strings"
 
 	"github.com/go-git/go-billy/v6"
@@ -39,6 +40,20 @@ func InstallLibraries(libraries []string) {
 	}
 }
 
+// dont merge contents of these files from imported libraries.
+func avoidFileName(fileName string) bool {
+	var blacklistedFileNames = []string{
+		"README.md",
+		"LICENSE",
+		"pack.mcmeta",
+		"libraries.json",
+	}
+	if slices.Contains(blacklistedFileNames, fileName) {
+		return true
+	}
+	return false
+}
+
 func MergeIndividualFiles(fs billy.Filesystem, currentPath string, targetDir string) error {
 	files, err := fs.ReadDir(currentPath)
 	if err != nil {
@@ -48,9 +63,9 @@ func MergeIndividualFiles(fs billy.Filesystem, currentPath string, targetDir str
 	for _, file := range files {
 
 		// skip LICENSE file
-		// if file.Name() == "LICENSE" {
-		// 	continue
-		// }
+		if avoidFileName(file.Name()) {
+			continue
+		}
 		
 		// store memory path and local path
 		memoryPath := filepath.Join(currentPath, file.Name())
