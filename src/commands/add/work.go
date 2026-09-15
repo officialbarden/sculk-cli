@@ -41,6 +41,10 @@ func InstallLibraries(libraries []string, ignoreVersionMismatch bool) {
 }
 
 func GetLibrarySource(libraryIdentifier string) (repo string, fs billy.Filesystem, error error) {
+	// GETS THE IDENTIFIER STRING
+	// AND RETURNS INFORMATION AND RAM-DOWNLOADED fs
+
+	
 	// use in-built hashmap to get src via acronym/identifiers
 	repoURL := VerifyLibraryIntegrity(libraryIdentifier).Source
 	

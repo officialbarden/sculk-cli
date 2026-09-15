@@ -1,3 +1,5 @@
 package uninstall
 
-func Main() {}
+func Main(args []string) {
+	
+}
