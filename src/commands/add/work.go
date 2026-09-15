@@ -4,8 +4,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"log"
 	"os"
 	"path/filepath"
+	"sculk-cli/src/commands/initProject/create"
 	"slices"
 	"strings"
 
@@ -15,7 +17,7 @@ import (
 	"github.com/go-git/go-git/v6/storage/memory"
 )
 
-func InstallLibraries(libraries []string) {
+func InstallLibraries(libraries []string, ignoreVersionMismatch bool) {
 
 	workingDir, err := os.Getwd()
 	if err != nil {
@@ -36,8 +38,45 @@ func InstallLibraries(libraries []string) {
 			panic(err)
 		}
 
+		// Match Game Versions, if flag doesn't exist.
+		if !ignoreVersionMismatch && gameVersionIncompat(fs) {
+			log.Fatal("The library you're is incompatible with your project's defined game version. Either change the project's version in libraries.json, or use the --ignore flag to install anyway.")
+		}
+		
 		err = MergeIndividualFiles(fs, "/", workingDir)
 	}
+}
+
+func gameVersionIncompat(fs billy.Filesystem) bool {
+	var libraryForm create.LibrariesDotJson
+	var existingProjectForm create.LibrariesDotJson
+
+	workingDir, err := os.Getwd()
+	if err != nil {
+		panic(err)
+	}
+
+	// parse the version string of current project, then parse the version string of the library, compare game_version field.
+	library, err := fs.Open("/libraries.json");
+	if err != nil {panic(err)}
+
+	libraryContent, err := io.ReadAll(library)
+	if err != nil { panic(err) }
+	
+	err = json.Unmarshal(libraryContent, &libraryForm);
+	if err != nil {
+		panic(err)
+	}
+
+	existingProject, err := os.ReadFile(filepath.Join(workingDir, "/libraries.json"))
+	err = json.Unmarshal(existingProject, &existingProjectForm);
+	if err != nil {panic(err)}
+
+	if strings.EqualFold(existingProjectForm.GameVersion, libraryForm.GameVersion) {
+		return false
+	}
+
+	return true
 }
 
 // dont merge contents of these files from imported libraries.

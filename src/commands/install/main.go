@@ -29,5 +29,5 @@ func Main() {
 		libraryIdentifiers = append(libraryIdentifiers, librariesOriginal[i].Identifier)
 	}
 	
-	add.InstallLibraries(libraryIdentifiers)
+	add.InstallLibraries(libraryIdentifiers, false)
 }

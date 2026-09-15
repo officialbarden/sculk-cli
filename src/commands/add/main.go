@@ -10,7 +10,7 @@ import (
 
 func Main(ignoreVersionMismatch bool, args []string) error { 
 	libraries := args
-	InstallLibraries(libraries)
+	InstallLibraries(libraries, ignoreVersionMismatch)
 	
 	// add to libraries.json
 	err := AddToLibrariesJson(libraries)
