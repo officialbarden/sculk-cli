@@ -6,10 +6,11 @@
 - [X] storing all installed libraries into a `libraries.json` (similar to package.json)
 
 ### Commands
-- [ ] Handle library versioning, updating.
-- [ ] An 'uninstall' command to remove files without causing conflicts.
+- [X] Handle library versioning, updating.
+- [X] An 'uninstall' command to remove files without causing conflicts.
 - [X] an 'install' command to install all libraries mentioned in `libraries.json`.
-    <br>
+
+ <br>
 
 # Welcome to Sculk-CLI
 Sculk CLI is a CLI-app for project initialisation, datapack library* handling, sharing and merging, inspired by Nodejs' Package Manager (NPM), Python's PIP & Rust's Cargo.
