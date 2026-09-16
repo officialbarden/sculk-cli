@@ -29,5 +29,13 @@ func Main() {
 		libraryIdentifiers = append(libraryIdentifiers, librariesOriginal[i].Identifier)
 	}
 	
+	var sanitizedLibraryIdentifiers []string
+	for i := range libraryIdentifiers {
+		if add.IsPreinstalled(libraryIdentifiers[i]) {
+			continue
+		} else {
+			sanitizedLibraryIdentifiers = append(sanitizedLibraryIdentifiers, libraryIdentifiers[i])
+		}
+	}
 	add.InstallLibraries(libraryIdentifiers, false)
 }
