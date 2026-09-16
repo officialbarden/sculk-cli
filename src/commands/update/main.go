@@ -1,4 +1,4 @@
-// To Update
+// To update
 // Check if a newer version exists.
 // If it exists, uninstall the current version, and install the new version
 package update
@@ -18,7 +18,7 @@ func Main(args []string) {
 	
 	if len(identifier) > 0 {
 		for _, identifierString := range identifier {
-			Update(identifierString)
+			updateInit(identifierString)
 		}
 	} else {
 
@@ -29,23 +29,25 @@ func Main(args []string) {
 			libraryIdentifiers = append(libraryIdentifiers, file.Identifier)
 		}
 
-		// update each of em:
+		// updateInit each of em:
 		for _, identifierString := range libraryIdentifiers {
-			Update(identifierString)
+			updateInit(identifierString)
 		}
 	}
 }
 
 // based on identifier
-func ExecuteUpdate(libraryDotJson create.LibrariesDotJson, libraryIdentifier string, fs billy.Filesystem) {
+func ExecuteupdateInit(libraryDotJson create.LibrariesDotJson, libraryIdentifier string, fs billy.Filesystem) {
 
 	isMismatch, oldVersion, newVersion := CheckVersionMismatch(libraryDotJson, libraryIdentifier, fs)	
 	if isMismatch {
 		log.Printf("🍁 Library '%s' is outdated. Updating [%s -> %s] ...", libraryIdentifier, oldVersion, newVersion);
-		// update library and update in libraries.json:
+
+		// updateInit library and updateInit in libraries.json:
+		// uninstall, install
 		
 		// log
-		log.Printf("🍀 Library '%s' has been updated [%s -> %s].", libraryIdentifier, oldVersion, newVersion);
+		log.Printf("🍀 Library '%s' has been updateInitd [%s -> %s].", libraryIdentifier, oldVersion, newVersion);
 	} else {
 		log.Printf("🍀 Library '%s' is up-to-date (v. %s).", libraryIdentifier, oldVersion);
 	}
@@ -72,7 +74,7 @@ func CheckVersionMismatch(libraryDotJson create.LibrariesDotJson, libraryIdentif
 	} else { return true, installedLibraryMetaData.Version, sourceLibraryData.Version }
 }
 
-func Update(libraryIdentifier string) {
+func updateInit(libraryIdentifier string) {
 	var libraryDotJson create.LibrariesDotJson
 	
 	// get source code for that library from git
@@ -81,6 +83,6 @@ func Update(libraryIdentifier string) {
 		return
 	}
 
-	// put src-code's libraries.json, identifier and fs in execUpdate
-	ExecuteUpdate(libraryDotJson, libraryIdentifier, fs)
+	// put src-code's libraries.json, identifier and fs in execupdateInit
+	ExecuteupdateInit(libraryDotJson, libraryIdentifier, fs)
 }
