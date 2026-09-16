@@ -7,10 +7,12 @@ import (
 	"path/filepath"
 	"sculk-cli/src/commands/initProject/create"
 	"slices"
+
+	"charm.land/log/v2"
 )
 
 func AddToLibrariesJson(libraries []string) error {
-	
+	log.Printf("🚧 Adding to libraries.json ...")
 	workingDir, err := os.Getwd()
 	if err != nil {
 		panic(err)
@@ -22,7 +24,7 @@ func AddToLibrariesJson(libraries []string) error {
 		panic(err)
 	}
 	defer file.Close()
-	
+
 	fileContent, err := io.ReadAll(file)
 	if err != nil {
 		panic(err)
@@ -39,13 +41,13 @@ func AddToLibrariesJson(libraries []string) error {
 
 		// do not create duplicate library entries
 		if slices.Contains(librariesJson.Libraries, VerifyLibraryIntegrity(libraries[i])) {
-			continue;
+			continue
 		}
-		
+
 		librariesJson.Libraries = append(librariesJson.Libraries, VerifyLibraryIntegrity(libraries[i]))
 	}
 	combined, err := json.MarshalIndent(librariesJson, "", "   ")
 
+	log.Printf("⚙ Added to libraries.json")
 	return os.WriteFile(jsonPath, combined, 0644)
 }
-

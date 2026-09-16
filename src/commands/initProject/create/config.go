@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"os"
 	"path/filepath"
+
+	"charm.land/log/v2"
 )
 
 // Defines pack.mcmeta format
@@ -46,6 +48,8 @@ type Library struct {
 
 
 func CreateLibrariesJson(author string, gameVersion string) {
+
+	log.Printf("🚧  Creating libraries.json ...")
 	// get target path
 	targetPath, err := os.Getwd()
 	if err != nil {
@@ -72,6 +76,7 @@ func CreateLibrariesJson(author string, gameVersion string) {
 
 	// Write to JSON.
 	encoder.Encode(data)
+	log.Printf("✅  Created libraries.json")
 } 
 
 func AddProjectNamespace(filePathPrefix string, namespace string, filePathSuffix string) string {

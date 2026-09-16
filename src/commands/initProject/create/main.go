@@ -3,12 +3,15 @@ package create
 
 import (
 	"os/user"
+
+	"charm.land/log/v2"
 )
 
 func CreateSculkProject(args []string, flags map[string]bool) error {
 
 	projectName := args[0]
 	projectVersion := args[1]
+	log.Printf("🚧  Creating Sculk Project %s for Minecraft %s", projectName, projectVersion)
 
 	projectType := "dp" // default is datapack project
 
@@ -35,6 +38,8 @@ func CreateSculkProject(args []string, flags map[string]bool) error {
 	}
 
 	// create pack.mcmeta file
+	log.Printf("🚧  Creating pack.mcmeta ...")
 	err = CreatePackMcmeta(projectVersion, projectType)
+	log.Printf("✅  Created pack.mcmeta")
 	return err
 }
