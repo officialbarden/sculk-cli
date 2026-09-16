@@ -17,17 +17,21 @@ func Main(args []string) {
 	identifier := args
 	
 	if len(identifier) > 0 {
-		for i := range identifier {
-			var libraryDotJson create.LibrariesDotJson
-			
-			// get source code for that library from git
-			_, libraryDotJson, fs, err := add.GetLibrarySource(identifier[i])
-			if err != nil {
-				return
-			}
+		for _, identifierString := range identifier {
+			Update(identifierString)
+		}
+	} else {
 
-			// put src-code's libraries.json, identifier and fs in execUpdate
-			ExecuteUpdate(libraryDotJson, identifier[i], fs)
+		// get all identifiers from local /libraries.json:
+		libraryFile := add.ReadLocalLibrariesJson()
+		var libraryIdentifiers []string
+		for _, file := range libraryFile.Libraries {
+			libraryIdentifiers = append(libraryIdentifiers, file.Identifier)
+		}
+
+		// update each of em:
+		for _, identifierString := range libraryIdentifiers {
+			Update(identifierString)
 		}
 	}
 }
@@ -37,13 +41,13 @@ func ExecuteUpdate(libraryDotJson create.LibrariesDotJson, libraryIdentifier str
 
 	isMismatch, oldVersion, newVersion := CheckVersionMismatch(libraryDotJson, libraryIdentifier, fs)	
 	if isMismatch {
-
+		log.Printf("🍁 Library '%s' is outdated. Updating [%s -> %s] ...", libraryIdentifier, oldVersion, newVersion);
 		// update library and update in libraries.json:
 		
 		// log
-		log.Printf("Library '%s' has been updated [%s -> %s].", libraryIdentifier, oldVersion, newVersion);
+		log.Printf("🍀 Library '%s' has been updated [%s -> %s].", libraryIdentifier, oldVersion, newVersion);
 	} else {
-		log.Printf("Library '%s' is up-to-date (v. %s).", libraryIdentifier, oldVersion);
+		log.Printf("🍀 Library '%s' is up-to-date (v. %s).", libraryIdentifier, oldVersion);
 	}
 }
 
@@ -66,4 +70,17 @@ func CheckVersionMismatch(libraryDotJson create.LibrariesDotJson, libraryIdentif
 	if sourceLibraryData.Version == installedLibraryMetaData.Version {
 		return false, installedLibraryMetaData.Version, sourceLibraryData.Version
 	} else { return true, installedLibraryMetaData.Version, sourceLibraryData.Version }
+}
+
+func Update(libraryIdentifier string) {
+	var libraryDotJson create.LibrariesDotJson
+	
+	// get source code for that library from git
+	_, libraryDotJson, fs, err := add.GetLibrarySource(libraryIdentifier)
+	if err != nil {
+		return
+	}
+
+	// put src-code's libraries.json, identifier and fs in execUpdate
+	ExecuteUpdate(libraryDotJson, libraryIdentifier, fs)
 }
