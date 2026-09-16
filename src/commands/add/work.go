@@ -18,39 +18,37 @@ import (
 	"github.com/go-git/go-git/v6/storage/memory"
 )
 
-func InstallLibraries(libraries []string, ignoreVersionMismatch bool) {
+func InstallLibraries(libraryIdentifier string, ignoreVersionMismatch bool) {
 
 	workingDir, err := os.Getwd()
 	if err != nil {
 		panic(err)
 	}
 
-	for i := range libraries {
-
-		libraryRepoLink, _, fs, err := GetLibrarySource(libraries[i])
-		if err != nil {
-			panic(err)
-		}
-
-		// LOGGER: found library
-		log.Printf("📩 Downloading %s", libraryRepoLink)
-
-		// Match Game Versions, if flag doesn't exist.
-		isIncompatWithGame, _, _ := gameVersionIncompat(fs)
-		if !ignoreVersionMismatch && isIncompatWithGame {
-			// LOGGER: Library is Incompatible (and no --ignore flag)
-			log.Fatal("The library you're is incompatible with your project's defined game version. Either change the project's version in libraries.json, or use the --ignore flag to install anyway.")
-		}
-
-		err = MergeIndividualFiles(fs, "/", workingDir)
-		if err != nil {
-			panic(err)
-		}
-
-		// merge this library to libraries.json
-		err = AddToLibrariesJson(libraries[i])
-		if err != nil { panic(err) }
+	libraryRepoLink, _, fs, err := GetLibrarySource(libraryIdentifier)
+	if err != nil {
+		panic(err)
 	}
+
+	// LOGGER: found library
+	log.Printf("📩 Downloading %s", libraryRepoLink)
+
+	// Match Game Versions, if flag doesn't exist.
+	isIncompatWithGame, _, _ := gameVersionIncompat(fs)
+
+	if !ignoreVersionMismatch && isIncompatWithGame {
+		// LOGGER: Library is Incompatible (and no --ignore flag)
+		log.Fatal("The library you're is incompatible with your project's defined game version. Either change the project's version in libraries.json, or use the --ignore flag to install anyway.")
+	}
+
+	err = MergeIndividualFiles(fs, "/", workingDir)
+	if err != nil {
+		panic(err)
+	}
+
+	// merge this library to libraries.json
+	err = AddToLibrariesJson(libraryIdentifier)
+	if err != nil { panic(err) }
 }
 
 func IsPreinstalled(libraryIdentifier string) bool {
@@ -152,13 +150,13 @@ func gameVersionIncompat(fs billy.Filesystem) (isIncompatible bool, existingProj
 
 // dont merge contents of these files from imported libraries.
 func avoidFileName(fileName string) bool {
-	var blacklistedFileNames = []string{
+	var BlacklistedFileNames = []string{
 		"README.md",
 		"LICENSE",
 		"pack.mcmeta",
 		"libraries.json",
 	}
-	if slices.Contains(blacklistedFileNames, fileName) {
+	if slices.Contains(BlacklistedFileNames, fileName) {
 		return true
 	} else {
 		return false

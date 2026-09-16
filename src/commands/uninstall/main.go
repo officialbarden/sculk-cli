@@ -17,20 +17,23 @@ func Main(args []string) {
 
 	libraryIdentifiers := args
 	for _, libraryIdentifier := range libraryIdentifiers {
-		// drop repo-link and librariesjson information
-		_, _, sourceCodeFilesystem, err := add.GetLibrarySource(libraryIdentifier)
-		if err != nil {panic(err)}
-		
-		getWorkingDir, err := os.Getwd()
-		// start from '/'
-		err = TraverseSourceCode(sourceCodeFilesystem, "/", getWorkingDir)
-		if err != nil {panic(err)}
-		err = add.RemoveFromLibrariesJson(libraryIdentifier)
-		if err != nil {panic(err)}
-		
+		UninstallLibrary(libraryIdentifier)
 	}
 
 	log.Printf("Note: Please delete the empty directories manually.")
+}
+
+func UninstallLibrary(libraryIdentifier string) {
+	// drop repo-link and librariesjson information
+	_, _, sourceCodeFilesystem, err := add.GetLibrarySource(libraryIdentifier)
+	if err != nil {panic(err)}
+	
+	getWorkingDir, err := os.Getwd()
+	// start from '/'
+	err = TraverseSourceCode(sourceCodeFilesystem, "/", getWorkingDir)
+	if err != nil {panic(err)}
+	err = add.RemoveFromLibrariesJson(libraryIdentifier)
+	if err != nil {panic(err)}
 }
 
 func TraverseSourceCode(fs billy.Filesystem, currentPath string, targetDir string) error {
@@ -53,6 +56,9 @@ func TraverseSourceCode(fs billy.Filesystem, currentPath string, targetDir strin
 			// blacklisted filenames
 			blacklistedFiles := []string{
 				"libraries.json",
+				"LICENSE",
+				"pack.mcmeta",
+				"README.md",
 			}
 			
 			err := handleFileDeletion(fs, memoryPath, localPath, blacklistedFiles)

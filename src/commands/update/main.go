@@ -6,6 +6,7 @@ package update
 import (
 	"sculk-cli/src/commands/add"
 	"sculk-cli/src/commands/initProject/create"
+	"sculk-cli/src/commands/uninstall"
 
 	"charm.land/log/v2"
 	"github.com/go-git/go-billy/v6"
@@ -45,6 +46,8 @@ func ExecuteupdateInit(libraryDotJson create.LibrariesDotJson, libraryIdentifier
 
 		// updateInit library and updateInit in libraries.json:
 		// uninstall, install
+		uninstall.UninstallLibrary(libraryIdentifier)
+		add.InstallLibraries(libraryIdentifier, false)
 		
 		// log
 		log.Printf("🍀 Library '%s' has been updateInitd [%s -> %s].", libraryIdentifier, oldVersion, newVersion);

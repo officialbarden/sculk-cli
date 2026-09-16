@@ -7,15 +7,12 @@ package add
 
 func Main(ignoreVersionMismatch bool, args []string) error { 
 
-	var libraries []string
-	
 	for i := range args {
 		// check if its already installed
 		if IsPreinstalled(args[i]) {
 			continue
 		} else {
-			libraries = append(libraries, args[i])
-			InstallLibraries(libraries, ignoreVersionMismatch)
+			InstallLibraries(args[i], ignoreVersionMismatch)
 		}
 	}
 	return nil
