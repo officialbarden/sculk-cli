@@ -42,7 +42,7 @@ type Library struct {
 	Identifier     string `json:"identifier"`   // Unique Identifier, handy for extremely popular packages.
 	Name           string `json:"name"`         // Name of the Library.
 	Source         string `json:"source"`       // A Git Repo Hosting Platform.
-	LibraryVersion string `json:"version"`      // version of the imported library.
+	Version		   string `json:"version"`      // version of the imported library.
 	GameVersion    string `json:"game_version"` // version of the game the library supports.
 }
 

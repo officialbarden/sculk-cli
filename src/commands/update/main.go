@@ -4,14 +4,10 @@
 package update
 
 import (
-	"encoding/json"
-	"fmt"
-	"io"
-	"os"
-	"path/filepath"
 	"sculk-cli/src/commands/add"
 	"sculk-cli/src/commands/initProject/create"
 
+	"charm.land/log/v2"
 	"github.com/go-git/go-billy/v6"
 )
 
@@ -22,65 +18,52 @@ func Main(args []string) {
 	
 	if len(identifier) > 0 {
 		for i := range identifier {
-			_, fs, err := add.GetLibrarySource(identifier[i])
+			var libraryDotJson create.LibrariesDotJson
+			
+			// get source code for that library from git
+			_, libraryDotJson, fs, err := add.GetLibrarySource(identifier[i])
 			if err != nil {
 				return
 			}
-			ExecuteUpdate(identifier[i], fs)
+
+			// put src-code's libraries.json, identifier and fs in execUpdate
+			ExecuteUpdate(libraryDotJson, identifier[i], fs)
 		}
 	}
 }
 
 // based on identifier
-func ExecuteUpdate(libraryIdentifier string, fs billy.Filesystem) {
+func ExecuteUpdate(libraryDotJson create.LibrariesDotJson, libraryIdentifier string, fs billy.Filesystem) {
 
-	if CheckVersionMismatch(libraryIdentifier, fs) {
-		fmt.Printf("Library '%s' has been updated.", libraryIdentifier);
+	isMismatch, oldVersion, newVersion := CheckVersionMismatch(libraryDotJson, libraryIdentifier, fs)	
+	if isMismatch {
+
+		// update library and update in libraries.json:
+		
+		// log
+		log.Printf("Library '%s' has been updated [%s -> %s].", libraryIdentifier, oldVersion, newVersion);
 	} else {
-		fmt.Printf("Library '%s' is up-2-date.", libraryIdentifier);
+		log.Printf("Library '%s' is up-to-date (v. %s).", libraryIdentifier, oldVersion);
 	}
 }
 
-func CheckVersionMismatch(libraryIdentifier string, fs billy.Filesystem) bool {
+func CheckVersionMismatch(libraryDotJson create.LibrariesDotJson, libraryIdentifier string, fs billy.Filesystem) (isMismatch bool, oldVersion string, newVersion string) {
 	
-	var existingLibraryData create.Library
-	var sourceLibraryData create.LibrariesDotJson
-
-	sourceLibraryDataFile, err := fs.Open("/libraries.json")
-	if err != nil {panic(err)}
-
-	sourceLibraryDataJson, err := io.ReadAll(sourceLibraryDataFile)
-	if err != nil {panic(err)}
-
-	err = json.Unmarshal(sourceLibraryDataJson, &sourceLibraryData)
-	if err != nil {panic(err)}
-
-	// verify if update is needed.
-	workDir, err := os.Getwd()
-	if err != nil {
-		panic(err)
-	}
-
-	project, err := os.ReadFile(filepath.Join(workDir, "/libraries.json"))
-	if err != nil {
-		panic(err)
-	}
-
-	var projectContent create.LibrariesDotJson
-	err = json.Unmarshal(project, &projectContent)
-	if err != nil { panic(err) }
-
+	existingLibraryData := add.ReadLocalLibrariesJson()
+	sourceLibraryData := libraryDotJson
+	var installedLibraryMetaData create.Library
+	
 	// find library with identifier.
-	for i := range projectContent.Libraries {
-		if projectContent.Libraries[i].Identifier == libraryIdentifier {
-			existingLibraryData = projectContent.Libraries[i]
+	for i := range existingLibraryData.Libraries {
+		if existingLibraryData.Libraries[i].Identifier == libraryIdentifier {
+			// once the identifier metadata is found in local libraries.json, store it in variable to compare later.
+			installedLibraryMetaData = existingLibraryData.Libraries[i]
 			break
 		}
 	}
 
 	// check if there's version mismatch
-	if sourceLibraryData.Version == existingLibraryData.LibraryVersion {
-		return false
-	} else { return true }
-	
+	if sourceLibraryData.Version == installedLibraryMetaData.Version {
+		return false, installedLibraryMetaData.Version, sourceLibraryData.Version
+	} else { return true, installedLibraryMetaData.Version, sourceLibraryData.Version }
 }

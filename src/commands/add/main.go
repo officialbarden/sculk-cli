@@ -14,15 +14,8 @@ func Main(ignoreVersionMismatch bool, args []string) error {
 		if IsPreinstalled(args[i]) {
 			continue
 		} else {
-
 			libraries = append(libraries, args[i])
 			InstallLibraries(libraries, ignoreVersionMismatch)
-			// add to libraries.json
-			err := AddToLibrariesJson(libraries)
-			if err != nil {
-				return err
-			}
-			
 		}
 	}
 	return nil

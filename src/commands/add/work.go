@@ -27,7 +27,7 @@ func InstallLibraries(libraries []string, ignoreVersionMismatch bool) {
 
 	for i := range libraries {
 
-		libraryRepoLink, fs, err := GetLibrarySource(libraries[i])
+		libraryRepoLink, _, _, fs, err := GetLibrarySource(libraries[i])
 		if err != nil {
 			panic(err)
 		}
@@ -36,7 +36,8 @@ func InstallLibraries(libraries []string, ignoreVersionMismatch bool) {
 		log.Printf("📩 Downloading %s", libraryRepoLink)
 
 		// Match Game Versions, if flag doesn't exist.
-		if !ignoreVersionMismatch && gameVersionIncompat(fs) {
+		isIncompatWithGame, _, _ := gameVersionIncompat(fs)
+		if !ignoreVersionMismatch && isIncompatWithGame {
 			// LOGGER: Library is Incompatible (and no --ignore flag)
 			log.Fatal("The library you're is incompatible with your project's defined game version. Either change the project's version in libraries.json, or use the --ignore flag to install anyway.")
 		}
@@ -45,16 +46,34 @@ func InstallLibraries(libraries []string, ignoreVersionMismatch bool) {
 		if err != nil {
 			panic(err)
 		}
+
+		// merge this library to libraries.json
+		err = AddToLibrariesJson(libraries)
+		if err != nil { panic(err) }
 	}
 }
 
 func IsPreinstalled(libraryIdentifier string) bool {
 
-	var libraryJson create.LibrariesDotJson
 	var librariesInstalled []create.Library
 
 	log.Printf("🔍 Checking in libraries.json ...")
+	librariesInstalled = ReadLocalLibrariesJson().Libraries	
 
+	for i := range librariesInstalled {
+		if librariesInstalled[i].Identifier == libraryIdentifier {
+			log.Printf("🔍 Library is already installed.")
+			return true
+		}
+	}
+
+	return false
+}
+
+
+// READS WORKING DIRECTORY'S libraries.json FILE.
+func ReadLocalLibrariesJson() create.LibrariesDotJson {
+	var libraryJson create.LibrariesDotJson
 	// build current path
 	workDir, err := os.Getwd()
 	if err != nil {
@@ -67,20 +86,11 @@ func IsPreinstalled(libraryIdentifier string) bool {
 	}
 	fileData, err := io.ReadAll(file)
 	err = json.Unmarshal(fileData, &libraryJson)
-	librariesInstalled = libraryJson.Libraries
-
-	for i := range librariesInstalled {
-		if librariesInstalled[i].Identifier == libraryIdentifier {
-			log.Printf("🔍 Library is already installed.")
-			return true
-		}
-	}
-
-	return false
+	return libraryJson
 }
 
-func GetLibrarySource(libraryIdentifier string) (repo string, fs billy.Filesystem, error error) {
-	// GETS THE IDENTIFIER STRING
+func GetLibrarySource(libraryIdentifier string) (repo string, libraryDotJson create.LibrariesDotJson, fs billy.Filesystem, error error) {
+	// GETS THE IDENTIFIER STRING, LIBRARY VERSION AND GAME VERSION
 	// AND RETURNS INFORMATION AND RAM-DOWNLOADED fs
 
 	// use in-built hashmap to get src via acronym/identifiers
@@ -96,17 +106,22 @@ func GetLibrarySource(libraryIdentifier string) (repo string, fs billy.Filesyste
 	if err != nil {
 		panic(err)
 	}
-	return repoURL, filesys, err
+
+	librariesDotJsonBillyData, err := filesys.Open("/libraries.json")
+	if err != nil {panic(err)}
+	librariesDotJsonData, err := io.ReadAll(librariesDotJsonBillyData)
+	if err != nil {panic(err)}
+	var librariesDotJsonParsed create.LibrariesDotJson
+	err = json.Unmarshal(librariesDotJsonData, &librariesDotJsonParsed)
+	if err != nil {panic(err)}
+	
+	return repoURL, librariesDotJsonParsed, filesys, err
 }
 
-func gameVersionIncompat(fs billy.Filesystem) bool {
+
+func gameVersionIncompat(fs billy.Filesystem) (isIncompatible bool, existingProjectVersion string, intendedGameVersion string ) {
 	var libraryForm create.LibrariesDotJson
 	var existingProjectForm create.LibrariesDotJson
-
-	workingDir, err := os.Getwd()
-	if err != nil {
-		panic(err)
-	}
 
 	// parse the version string of current project, then parse the version string of the library, compare game_version field.
 	log.Print(fs)
@@ -126,17 +141,13 @@ func gameVersionIncompat(fs billy.Filesystem) bool {
 		panic(err)
 	}
 
-	existingProject, err := os.ReadFile(filepath.Join(workingDir, "/libraries.json"))
-	err = json.Unmarshal(existingProject, &existingProjectForm)
-	if err != nil {
-		panic(err)
-	}
+	existingProjectForm = ReadLocalLibrariesJson()
 
 	if strings.EqualFold(existingProjectForm.GameVersion, libraryForm.GameVersion) {
-		return false
+		return false, existingProjectForm.GameVersion, libraryForm.GameVersion
 	}
 
-	return true
+	return true, existingProjectForm.GameVersion, libraryForm.GameVersion
 }
 
 // dont merge contents of these files from imported libraries.
