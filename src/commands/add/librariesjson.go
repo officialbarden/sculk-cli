@@ -2,49 +2,36 @@ package add
 
 import (
 	"encoding/json"
-	"io"
 	"os"
 	"path/filepath"
-	"sculk-cli/src/commands/initProject/create"
 
 	"charm.land/log/v2"
 )
 
 func AddToLibrariesJson(libraryIdentifier string) error {
-	log.Printf("🚧 Adding %s to libraries.json ...", libraryIdentifier)
+	log.Printf("🚧 Adding '%s' library to libraries.json ...", libraryIdentifier)
 	workingDir, err := os.Getwd()
 	if err != nil {
 		panic(err)
 	}
 
-	jsonPath := filepath.Join(workingDir, "libraries.json")
+	jsonPath := filepath.Join(workingDir, "/libraries.json")
 	file, err := os.Open(jsonPath)
 	if err != nil {
 		panic(err)
 	}
 	defer file.Close()
 
-	fileContent, err := io.ReadAll(file)
-	if err != nil {
-		panic(err)
-	}
+	librariesJson := ReadLocalLibrariesJson()
 
-	var librariesJson create.LibrariesDotJson
-
-	err = json.Unmarshal(fileContent, &librariesJson)
-	if err != nil {
-		panic(err)
-	}
-
-	for i := range librariesJson.Libraries {
-
-		// do not create duplicate library entries
-		if librariesJson.Libraries[i].Identifier == libraryIdentifier {
-			continue
+	for _, lib := range librariesJson.Libraries {
+		if lib.Identifier == libraryIdentifier {
+			log.Printf("⚠ Library '%s' already exists in libraries.json", libraryIdentifier)
+			return nil
 		}
-
-		librariesJson.Libraries = append(librariesJson.Libraries, VerifyLibraryIntegrity(libraries[i]))
 	}
+	
+	librariesJson.Libraries = append(librariesJson.Libraries, BuildImportedLibraryMetadata(VerifyLibraryIntegrity(libraryIdentifier)))
 	combined, err := json.MarshalIndent(librariesJson, "", "   ")
 
 	log.Printf("⚙ Added to libraries.json")

@@ -32,6 +32,7 @@ type ResourcepackFile struct {
 }
 
 type LibrariesDotJson struct {
+	Name        string    `json:"name"`         // Name of the Project.
 	Author      string    `json:"author"`       // Name of Author
 	Version     string    `json:"version"`      // version of the sculk project
 	GameVersion string    `json:"game_version"` // game version the sculk project is meant for - used to check versions while installing
@@ -39,13 +40,11 @@ type LibrariesDotJson struct {
 }
 
 type Library struct {
-	Identifier     string `json:"identifier"`   // Unique Identifier, handy for extremely popular packages.
-	Name           string `json:"name"`         // Name of the Library.
-	Source         string `json:"source"`       // A Git Repo Hosting Platform.
-	Version		   string `json:"version"`      // version of the imported library.
-	GameVersion    string `json:"game_version"` // version of the game the library supports.
+	Identifier  string `json:"identifier"`   // Unique Identifier, handy for extremely popular packages.
+	Source      string `json:"source"`       // A Git Repo Hosting Platform.
+	Version     string `json:"version"`      // version of the imported library.
+	GameVersion string `json:"game_version"` // version of the game the library supports.
 }
-
 
 func CreateLibrariesJson(author string, gameVersion string) {
 
@@ -68,16 +67,16 @@ func CreateLibrariesJson(author string, gameVersion string) {
 	encoder.SetIndent("", "   ")
 
 	data := LibrariesDotJson{
-		Author: author,
-		Version: "1.0.0",
+		Author:      author,
+		Version:     "1.0.0",
 		GameVersion: gameVersion,
-		Libraries: []Library{},
+		Libraries:   []Library{},
 	}
 
 	// Write to JSON.
 	encoder.Encode(data)
 	log.Printf("✅  Created libraries.json")
-} 
+}
 
 func AddProjectNamespace(filePathPrefix string, namespace string, filePathSuffix string) string {
 	return filePathPrefix + namespace + filePathSuffix

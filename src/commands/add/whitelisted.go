@@ -1,7 +1,9 @@
 // checks integrity of library
 package add
 
-import ()
+import (
+	"sculk-cli/src/commands/initProject/create"
+)
 
 type libraryBlock struct {
 	Identifier string
@@ -22,4 +24,20 @@ func VerifyLibraryIntegrity(identifier string) libraryBlock {
 		},
 	}
 	return approvedLibraries[identifier]
+}
+
+
+
+func BuildImportedLibraryMetadata(libraryBlock libraryBlock) create.Library {
+	var sourceLibraryDotJson create.LibrariesDotJson
+
+	_, sourceLibraryDotJson, _, err := GetLibrarySource(libraryBlock.Identifier)	
+	if err != nil {panic(err)}
+
+	return create.Library{
+		Identifier: libraryBlock.Identifier,
+		Source: libraryBlock.Source,
+		Version: sourceLibraryDotJson.Version,
+		GameVersion: sourceLibraryDotJson.GameVersion,
+	}
 }

@@ -27,7 +27,7 @@ func InstallLibraries(libraries []string, ignoreVersionMismatch bool) {
 
 	for i := range libraries {
 
-		libraryRepoLink, _, _, fs, err := GetLibrarySource(libraries[i])
+		libraryRepoLink, _, fs, err := GetLibrarySource(libraries[i])
 		if err != nil {
 			panic(err)
 		}
@@ -48,7 +48,7 @@ func InstallLibraries(libraries []string, ignoreVersionMismatch bool) {
 		}
 
 		// merge this library to libraries.json
-		err = AddToLibrariesJson(libraries)
+		err = AddToLibrariesJson(libraries[i])
 		if err != nil { panic(err) }
 	}
 }
