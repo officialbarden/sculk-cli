@@ -2,13 +2,13 @@
 
 ### Goals
 - [ ] Make a website - Sculk users can find available libraries to download on this website.
-- [X] Conflict-less merging of libraries
-- [X] storing all installed libraries into a `libraries.json` (similar to package.json)
+- [X] ~~Conflict-less merging of libraries~~
+- [X] ~~storing all installed libraries into a `libraries.json` (similar to package.json)~~
 
 ### Commands
-- [X] Handle library versioning, updating.
-- [X] An 'uninstall' command to remove files without causing conflicts.
-- [X] an 'install' command to install all libraries mentioned in `libraries.json`.
+- [X] ~~Handle library versioning, updating.~~
+- [X] ~~An 'uninstall' command to remove files without causing conflicts.~~
+- [X] ~~an 'install' command to install all libraries mentioned in `libraries.json`.~~
 
  <br>
 
