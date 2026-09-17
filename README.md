@@ -34,7 +34,12 @@
     - [X] id-system - an id library that creates scoreboard ids
     - [ ] uuid - hexuuid conversion library (CJDev's library)
     - [ ] astar - CJDev's astar
-
+    - [ ] playermotion - https://github.com/MulverineX/player_motion
+    - [ ] titlewriter - https://github.com/officialbarden/titlewriter
+    - [ ] speclib - https://github.com/officialbarden/speclib
+    - [ ] reef - https://github.com/Trioplane/reef
+    - [ ] hitmatch - https://github.com/picarrow/hit-match
+    - [ ] stringlib - https://github.com/CMDred/StringLib
 
  <br>
 
