@@ -23,5 +23,9 @@
   },
   "allowScripts": {
     "esbuild": true
+  },
+  "devDependencies": {
+    "@iconify-json/akar-icons": "^1.2.7",
+    "@iconify-json/mdi": "^1.2.3"
   }
 }

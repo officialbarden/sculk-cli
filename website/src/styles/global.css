@@ -1,14 +1,27 @@
 @import "tailwindcss";
 
 @theme {
-    --font-ui: 'JetBrains Mono'
+    --font-ui: 'JetBrains Mono';
+    --color-main: #FFFFFF;
+    --color-main-dark: #0A0A0A;
 }
 
 @layer {
     .page {
-        @apply font-ui;
         @apply w-full min-h-screen;
+        @apply bg-main dark:bg-main-dark;
+        @apply text-black dark:text-white;
     }
+
+    .wallpaper {
+        @apply min-h-screen;
+        background-color: #070606;
+    }
+}
+
+a {
+    @apply hover:cursor-pointer;
+    @apply text-purple-900 dark:text-purple-100;
 }
 
 @font-face {

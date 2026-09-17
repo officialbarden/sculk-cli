@@ -1,8 +1,57 @@
 ---
+import {Icon} from 'astro-icon/components';
 import Logo from '../components/UI/Logo.astro'
+import CLI from '../components/UI/CLI.svelte'
 import Layout from '../layouts/Layout.astro';
+
+// images
+import sculkcli from '../assets/images/typography/sculk-cli.png'
+import tagline from '../assets/images/typography/tagline.png'
+
+const optimizedImages = {
+    sculkcli,
+    tagline
+}
+
+const links = new Map<string, string>()
+links.set("discord", "https://discord.gg/JWZkAgsyry")
+links.set("github", "https://github.com/officialbarden/sculk-cli")
+
 ---
 
 <Layout title="sculk-cli">
-    <Logo />
+    <div class="flex flex-col items-center wallpaper">
+        <div class="mt-25">
+            <Logo images={optimizedImages}/>
+        </div>
+
+        <div class="mx-4">
+            <CLI client:idle />
+        </div>
+        
+        <div class="flex w-100 gap-10">
+            <div class="flex items-center flex-1 flex-col">
+                <div class="text-left flex flex-col">
+                    <h2 class="flex items-center underline gap-1 text-[12px]">
+                        Visit
+                        <Icon name="akar-icons:link-out"/>
+                    </h2>
+                    <a>Docs</a>
+                    <a>Libraries</a>
+                </div>
+            </div>
+            
+            <div class="flex items-center flex-1 flex-col">
+                <div class="text-left flex flex-col">
+                    <h2 class="flex items-center underline gap-1 text-[12px]">
+                        Links
+                        <Icon name="akar-icons:link-out"/>
+                    </h2>
+                    <a href={links.get("discord")}>Discord</a>
+                    <a href={links.get("github")}>Github</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </Layout>
