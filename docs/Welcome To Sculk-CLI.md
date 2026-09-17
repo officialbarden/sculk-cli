@@ -71,7 +71,6 @@ Sculk will then reach in its internal hashmap, get the source link and get the c
    "libraries": [
       {
          "identifier": "id-system",
-         "name": "ID System",
          "source": "http://github.com/officialbarden/id-system",
          "version": "1.0.0",
          "game_version": "26.2"

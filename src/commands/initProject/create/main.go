@@ -11,7 +11,7 @@ func CreateSculkProject(args []string, flags map[string]bool) error {
 
 	projectName := args[0]
 	projectVersion := args[1]
-	log.Printf("🚧  Creating Sculk Project %s for Minecraft %s", projectName, projectVersion)
+	log.Printf("🚧  Creating Sculk Project '%s' for Minecraft %s", projectName, projectVersion)
 
 	projectType := "dp" // default is datapack project
 
