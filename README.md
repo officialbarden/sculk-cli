@@ -2,13 +2,39 @@
 
 ### Goals
 - [ ] Make a website - Sculk users can find available libraries to download on this website.
+- [ ] Make showcase gifs/videos
 - [X] ~~Conflict-less merging of libraries~~
 - [X] ~~storing all installed libraries into a `libraries.json` (similar to package.json)~~
 
 ### Commands
+- [ ] Add 'template' command.
+    - [ ] `sculk template create [templateName]`
+    - [ ] `sculk template delete [templateName]`
+    - [ ] `sculk template add [templateName]`
+- [ ] Add 'config' command.
+    - [ ] Add option to install modules in a seperate datapack (no merging).
+        - [ ] `sculk config doMerge true/false`
+    - [ ] Add default author-name.
+        - [ ] `sculk config author [authorNameString]`
+- [ ] Add particular version installation via searching branches 
+    - [ ] `sculk add id-system@1.0.0` <- 1.0.0 version, current GameVer.
+    - [ ] `sculk add id-system@1.0.0/26.2` <- 1.0.0 version of 26.2 GameVer.
+    - [ ] `sculk add id-system@/26.2` <- latest library for 26.2 GameVer.
+    - [ ] `sculk add id-system@latest` <- same as `sculk add id-system`; if --ignore flag used, downloads from latest GameVer.
+- [ ] Add GameVer updating to port datapacks;
+    - [ ] `sculk update --project` <- updates entire project to a provided version. 
+
 - [X] ~~Handle library versioning, updating.~~
 - [X] ~~An 'uninstall' command to remove files without causing conflicts.~~
 - [X] ~~an 'install' command to install all libraries mentioned in `libraries.json`.~~
+
+### Other
+- [ ] Add advanced version comparing (e.g. "<1.20.1" or ">26.2" becomes valid syntax).
+- [ ] Write some default libraries
+    - [X] id-system - an id library that creates scoreboard ids
+    - [ ] uuid - hexuuid conversion library (CJDev's library)
+    - [ ] astar - CJDev's astar
+
 
  <br>
 
