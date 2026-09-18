@@ -24,18 +24,60 @@ const links = [
 ---
 
 <Layout title="sculk-cli">
-    <div class="flex md:flex-row flex-col wallpaper">
-        <div class="mb-10 flex gap-10">
-            <Logo images={optimizedImages}/>
-        </div>
-        <div class="mx-auto flex gap-5 md:gap-0 md:mt-75 md:flex-col md:-skew-y-5">
-            {links.map(link => (
-                <div class="group w-fit relative h-fit z-100">
-                    <div class="md:w-[110%] w-[105%] h-full flex md:hidden -skew-y-2 translate-y-0.5 -left-1 bg-select scale-x-100 md:scale-x-0 origin-left absolute duration-150 group-hover:scale-x-100"></div>
-                    <div class="md:w-[110%] w-[105%] h-full hidden md:flex -left-1 bg-select scale-x-100 md:scale-x-0 origin-left absolute duration-150 group-hover:scale-x-100"></div>
-                    <a href={link.href} class="font-tagline text-2xl md:text-4xl relative">{link.label}</a>
+    <div class="wallpaper">
+        <div class="flex flex-col min-h-screen">
+            <div class="flex flex-col md:flex-row md:mt-15">
+                <div class="mb-5 flex gap-10">
+                    <Logo images={optimizedImages}/>
                 </div>
-            ))}
+                <div class="mx-auto md:mt-35 flex gap-5 md:gap-0 md:flex-col md:-skew-y-5">
+                    {links.map(link => (
+                        <div class="group w-fit relative h-fit z-100">
+                            <div class="md:w-[110%] w-[105%] h-full flex md:hidden -skew-y-2 translate-y-0.5 -left-1 bg-select scale-x-100 md:scale-x-0 origin-left absolute duration-200 group-hover:scale-x-100"></div>
+                            <div class="md:w-[110%] w-[105%] h-full hidden md:flex -left-1 bg-select scale-x-100 md:scale-x-0 origin-left absolute duration-200 group-hover:scale-x-100"></div>
+                            <a href={link.href} class="font-tagline text-2xl md:text-5xl relative">{link.label}</a>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            <!-- <div class="m-auto">
+                <CLI />
+            </div> -->
         </div>
+
+        <div class="flex flex-col md:flex-row md:mb-0 mb-10 p-1">
+            <div class="md:mx-15 mx-auto my-2 md:my-12 w-[80%] md:w-200 rounded-2xl aspect-video bg-white"></div>
+            <div class="my-auto font-tagline mx-auto">
+                <h1 class="text-[12px] md:text-4xl md:w-85">
+                    <span class="text-[15px] md:text-5xl">sculk-cli</span> takes care of <span class="italic underline h-20">your</span> datapacks for you.
+                </h1>
+            </div>
+        </div>
+
+        <div class="flex flex-col md:flex-row md:mb-0 mb-10 p-1">
+            <div class="hidden md:flex my-auto font-tagline mx-auto">
+                <h1 class="text-[12px] md:text-4xl md:w-85">
+                    <span class="text-[15px] md:text-5xl">sculk-cli</span> makes initializing <span class="italic underline h-20">your</span> datapacks easier.
+                </h1>
+            </div> 
+            <div class="md:mx-15 mx-auto my-2 md:my-12 w-[80%] md:w-200 rounded-2xl aspect-video bg-white"></div>
+            <div class="my-auto md:hidden font-tagline mx-auto">
+                <h1 class="text-[12px] md:text-4xl md:w-85">
+                    <span class="text-[15px] md:text-5xl">sculk-cli</span> makes initializing <span class="italic underline h-20">your</span> datapacks easier.
+                </h1>
+            </div>
+        </div>
+
+        <div class="flex flex-col md:flex-row md:mb-0 mb-10 p-1">
+            <div class="md:mx-15 mx-auto my-2 md:my-12 w-[80%] md:w-200 rounded-2xl aspect-video bg-white"></div>
+            <div class="my-auto font-tagline mx-auto">
+                <h1 class="text-[12px] md:text-4xl md:w-85">
+                    <span class="text-[15px] md:text-5xl">sculk-cli</span> keeps track of <span class="italic underline h-20">libraries</span> for you.
+                </h1>
+            </div>
+        </div>
+        
     </div>
+
 </Layout>
