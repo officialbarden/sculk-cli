@@ -7,51 +7,35 @@ import Layout from '../layouts/Layout.astro';
 // images
 import sculkcli from '../assets/images/typography/sculk-cli.png'
 import tagline from '../assets/images/typography/tagline.png'
+import taglinemobile from '../assets/images/typography/tagline-mobile.png'
 
 const optimizedImages = {
     sculkcli,
-    tagline
+    tagline,
+    taglinemobile
 }
 
-const links = new Map<string, string>()
-links.set("discord", "https://discord.gg/JWZkAgsyry")
-links.set("github", "https://github.com/officialbarden/sculk-cli")
+const links = [
+    {label: "Docs", "href": "/docs"},
+    {label: "Libraries", "href": "/libraries"},
+    {label: "Links", "href": "/links"},
+]
 
 ---
 
 <Layout title="sculk-cli">
-    <div class="flex flex-col items-center wallpaper">
-        <div class="mt-25">
+    <div class="flex md:flex-row flex-col wallpaper">
+        <div class="mb-10 flex gap-10">
             <Logo images={optimizedImages}/>
         </div>
-
-        <div class="mx-4">
-            <CLI client:idle />
-        </div>
-        
-        <div class="flex w-100 gap-10">
-            <div class="flex items-center flex-1 flex-col">
-                <div class="text-left flex flex-col">
-                    <h2 class="flex items-center underline gap-1 text-[12px]">
-                        Visit
-                        <Icon name="akar-icons:link-out"/>
-                    </h2>
-                    <a>Docs</a>
-                    <a>Libraries</a>
+        <div class="mx-auto flex gap-5 md:gap-0 md:mt-75 md:flex-col md:-skew-y-5">
+            {links.map(link => (
+                <div class="group w-fit relative h-fit z-100">
+                    <div class="md:w-[110%] w-[105%] h-full flex md:hidden -skew-y-2 translate-y-0.5 -left-1 bg-select scale-x-100 md:scale-x-0 origin-left absolute duration-150 group-hover:scale-x-100"></div>
+                    <div class="md:w-[110%] w-[105%] h-full hidden md:flex -left-1 bg-select scale-x-100 md:scale-x-0 origin-left absolute duration-150 group-hover:scale-x-100"></div>
+                    <a href={link.href} class="font-tagline text-2xl md:text-4xl relative">{link.label}</a>
                 </div>
-            </div>
-            
-            <div class="flex items-center flex-1 flex-col">
-                <div class="text-left flex flex-col">
-                    <h2 class="flex items-center underline gap-1 text-[12px]">
-                        Links
-                        <Icon name="akar-icons:link-out"/>
-                    </h2>
-                    <a href={links.get("discord")}>Discord</a>
-                    <a href={links.get("github")}>Github</a>
-                </div>
-            </div>
-
+            ))}
         </div>
     </div>
 </Layout>

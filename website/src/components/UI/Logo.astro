@@ -1,8 +1,31 @@
 ---
+import CLI from "./CLI.svelte";
+import { Icon } from 'astro-icon/components'
+
 const { images } = Astro.props;
 ---
 
 <main class="mx-4 p-2">
-    <h2 class="text-4xl md:text-5xl">sculk-cli</h2>
-    <p class="text-[13px]">a Datapack library manager, inspired by NPM, PIP, Cargo</p>
+    <div class="text-left md:w-250 md:gap-0 flex flex-col gap-5 mt-10 md:px-10">
+
+        <div class="flex items-center gap-5 md:mb-5 -skew-y-1">
+            <div class="w-50 bg-indigo-950">
+                <img class="-skew-x-10 -translate-y-2.5 md:-translate-y-2" src={images.sculkcli.src}>
+            </div>
+            <div class="flex items-center gap-2.5">
+                <a href="https://github.com/officialbarden/sculk-cli" rel="noopener noreferrer" target="_blank" class="text-4xl">
+                    <Icon name="akar-icons:github-fill" />
+                </a>
+                <a href="https://discord.gg/JWZkAgsyry" rel="noopener noreferrer" target="_blank" class="text-4xl">
+                    <Icon name="akar-icons:discord-fill" />
+                </a>
+            </div>
+        </div>
+        
+        <div class="flex w-full">
+            <img class="hidden md:flex" src={images.tagline.src}>
+            <img class="md:hidden flex" src={images.taglinemobile.src}>
+        </div>
+
+    </div>
 </main>

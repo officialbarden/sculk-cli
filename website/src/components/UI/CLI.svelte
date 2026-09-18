@@ -21,7 +21,7 @@
 </script>
 
 <!-- command-line examples -->
-<div class=" bg-black my-10 w-full md:w-100 rounded-xl min-h-10 border border-white/10">
+<div class=" bg-black my-10 w-full min-w-100 md:w-100 rounded-xl min-h-10 border border-white/10">
     <!-- buttons -->
     <div class="flex text-white px-3">
         <button onclick={() => {setString("init")}} class="p-2 border-b border-transparent hover:border-white/30 cursor-pointer">init</button>

@@ -1,9 +1,12 @@
 @import "tailwindcss";
 
 @theme {
+    --font-tagline: 'Konkhmer Sleokchher Regular';
     --font-ui: 'JetBrains Mono';
     --color-main: #FFFFFF;
     --color-main-dark: #0A0A0A;
+
+    --color-select: #1e1a4d;
 }
 
 @layer {
@@ -28,3 +31,9 @@ a {
     font-family: 'JetBrains Mono';
     src: url("../assets/fonts/JetBrainsMono-Regular.ttf");
 }
+
+@font-face {
+    font-family: 'Konkhmer Sleokchher Regular';
+    src: url("../assets/fonts/KonkhmerSleokchher-Regular.ttf");
+}
+
