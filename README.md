@@ -8,9 +8,9 @@
 
 ### Commands
 - [ ] Add 'template' command.
-    - [ ] `sculk template create [templateName]`
-    - [ ] `sculk template delete [templateName]`
-    - [ ] `sculk template add [templateName]`
+    - [ ] `sculk template --create [templateName]`
+    - [ ] `sculk template --delete [templateName]`
+    - [ ] `sculk template --add [templateName]`
 - [ ] Add 'config' command.
     - [ ] Add option to install modules in a seperate datapack (no merging).
         - [ ] `sculk config doMerge true/false`
