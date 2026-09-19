@@ -46,9 +46,33 @@ func CreateTemplate(templateName string) {
 
 	log.Printf("📂 New Template '%s' created.", templateName)
 }
+
 func AddTemplate(templateName string) {
+	workingDir, err := os.Getwd()
+	if err != nil { panic(err) }
+
+	// if a sculk-project is already in the current dir, return
+	librariesJson := filepath.Join(workingDir, "libraries.json")
+	_, sculkProjectExists := os.Stat(librariesJson)
+	if sculkProjectExists == nil {
+		log.Error("Cannot initialize template, a sculk-project already exists.")
+		return
+	}
 	
+	cacheDir, err := os.UserCacheDir()
+	if err != nil { panic(err) }
+
+	templateDir := filepath.Join(cacheDir, "sculk", "templates", templateName)
+	
+	srcDir := templateDir
+	destDir := workingDir
+
+	err = copy.Copy(srcDir, destDir)
+	if err != nil { panic(err) }
+
+	log.Printf("Template '%s' initialized.", templateName)
 }
+
 func DeleteTemplate(templateName string) {
 	cacheDir, err := os.UserCacheDir()
 	if err != nil { panic(err) }
