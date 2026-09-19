@@ -7,10 +7,10 @@
 - [X] ~~storing all installed libraries into a `libraries.json` (similar to package.json)~~
 
 ### Commands
-- [ ] Add 'template' command.
-    - [ ] `sculk template --create [templateName]`
-    - [ ] `sculk template --delete [templateName]`
-    - [ ] `sculk template --add [templateName]`
+- [X] Add 'template' command.
+    - [X] `sculk template --create [templateName]`
+    - [X] `sculk template --delete [templateName]`
+    - [X] `sculk template --add [templateName]`
 - [ ] Add 'config' command.
     - [ ] Add option to install modules in a seperate datapack (no merging).
         - [ ] `sculk config doMerge true/false`
