@@ -1,26 +1,24 @@
 ---
-import {Icon} from 'astro-icon/components';
-import Logo from '../components/UI/Logo.astro'
-import CLI from '../components/UI/CLI.svelte'
-import Layout from '../layouts/Layout.astro';
+import Logo from "../components/UI/Logo.astro";
+import CLI from "../components/UI/CLI.svelte";
+import Layout from "../layouts/Layout.astro";
 
 // images
-import sculkcli from '../assets/images/typography/sculk-cli.png'
-import tagline from '../assets/images/typography/tagline.png'
-import taglinemobile from '../assets/images/typography/tagline-mobile.png'
+import sculkcli from "../assets/images/typography/sculk-cli.png";
+import tagline from "../assets/images/typography/tagline.png";
+import taglinemobile from "../assets/images/typography/tagline-mobile.png";
 
 const optimizedImages = {
     sculkcli,
     tagline,
-    taglinemobile
-}
+    taglinemobile,
+};
 
 const links = [
-    {label: "Docs", "href": "/docs/welcome-to-sculk-cli"},
-    {label: "Libraries", "href": "/libraries"},
-    {label: "Links", "href": "/links"},
-]
-
+    { label: "Docs", href: "/docs/welcome-to-sculk-cli" },
+    { label: "Libraries", href: "/libraries" },
+    { label: "Links", href: "/links" },
+];
 ---
 
 <Layout title="sculk-cli">
@@ -28,14 +26,19 @@ const links = [
         <div class="flex flex-col min-h-screen">
             <div class="flex flex-col md:flex-row md:mt-15">
                 <div class="mb-5 flex gap-10">
-                    <Logo images={optimizedImages}/>
+                    <Logo images={optimizedImages} />
                 </div>
                 <div class="mx-auto md:mt-35 flex gap-5 md:gap-0 md:flex-col md:-skew-y-5">
-                    {links.map(link => (
+                    {links.map((link) => (
                         <div class="group w-fit relative h-fit z-100">
                             <div class="md:w-[110%] w-[105%] h-full flex md:hidden -skew-y-2 translate-y-0.5 -left-1 bg-select scale-x-100 md:scale-x-0 origin-left absolute duration-200 group-hover:scale-x-100"></div>
                             <div class="md:w-[110%] w-[105%] h-full hidden md:flex -left-1 bg-select scale-x-100 md:scale-x-0 origin-left absolute duration-200 group-hover:scale-x-100"></div>
-                            <a href={link.href} class="font-tagline text-2xl md:text-5xl relative">{link.label}</a>
+                            <a
+                                href={link.href}
+                                class="font-tagline text-2xl md:text-5xl relative"
+                            >
+                                {link.label}
+                            </a>
                         </div>
                     ))}
                 </div>
@@ -45,7 +48,5 @@ const links = [
                 <CLI />
             </div> -->
         </div>
-
     </div>
-
 </Layout>

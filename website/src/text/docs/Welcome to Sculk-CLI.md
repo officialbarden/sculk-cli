@@ -1,3 +1,6 @@
+---
+position: -1
+---
 # Welcome to Sculk-CLI
 Sculk CLI is a CLI-app for project initialisation, datapack library* handling, sharing and merging, inspired by Nodejs' Package Manager (NPM), Python's PIP & Rust's Cargo.
 

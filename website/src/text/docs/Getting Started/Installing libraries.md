@@ -1,3 +1,6 @@
+---
+position: 1
+---
 # Installing a sculk library*
 
 Just like how a developer may download a particular package, say for example: the pandas library* of python, the command for it in command-line would be: `pip install pandas`

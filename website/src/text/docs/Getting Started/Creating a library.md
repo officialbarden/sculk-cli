@@ -1,3 +1,6 @@
+---
+position: 3
+---
 
 # Creating/Publishing a sculk library
 You can create and submit your sculk libraries in our [sculk-discord](

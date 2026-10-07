@@ -1,3 +1,7 @@
+---
+position: 0
+---
+
 # Initializing a 'sculk project'
 
 Open the shell *inside* your datapack folder (e.g. /saves/WORLD_NAME/datapacks/<test_datapack>)

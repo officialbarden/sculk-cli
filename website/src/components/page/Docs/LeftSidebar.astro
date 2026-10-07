@@ -3,7 +3,7 @@ import wordmark from '../../../assets/images/typography/sculk-cli.png'
 import { getCollection, type CollectionEntry } from 'astro:content';
 
 const allDocs = await getCollection('docs')
-const grouped = new Map<string, { name: string; href: string }[]>()
+const grouped = new Map<string, { name: string; position: number, href: string }[]>()
 
 for (const doc of allDocs) {
     const parts = doc.id.split('/')
@@ -14,6 +14,7 @@ for (const doc of allDocs) {
 
     grouped.get(category)!.push({
         name: (doc.data as any).title ?? prettify(slug),
+        position: doc.data.position,
         href: `/docs/${doc.id}`,
     })
 }
@@ -23,12 +24,25 @@ function prettify(str: string) {
         .replace(/\b\w/g, (c) => c.toUpperCase())
 }
 
+const pos = (n?: number) => n ?? Infinity
+
 const categories = [...grouped.entries()]
-    .sort(([a], [b]) => a.localeCompare(b))
-    .map(([name, subsections]) => ({
-        name: prettify(name),
-        subsections: subsections.sort((a, b) => a.name.localeCompare(b.name)),
-    }))
+    .map(([name, subsections]) => {
+        const sorted = [...subsections].sort(
+            (a, b) =>
+                pos(a.position) - pos(b.position) ||
+                a.name.localeCompare(b.name)
+        )
+        return {
+            name: prettify(name),
+            minPosition: pos(sorted[0]?.position),
+            subsections: sorted,
+        }
+    })
+    .sort(
+        (a, b) =>
+            a.minPosition - b.minPosition || a.name.localeCompare(b.name)
+    )
 ---
 
 <div class="hidden md:flex flex-col min-w-60 max-w-200 min-h-full font-ui border border-dim">

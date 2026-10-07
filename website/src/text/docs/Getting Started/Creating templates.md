@@ -1,3 +1,7 @@
+---
+position: 2
+---
+
 # Templates in sculk
 
 In sculk-cli, you can take a snapshot of the current moment of your sculk-project, and template-ify it! This will allow you to revisit a similar file structure in future, significantly speeding up your project creation and initialization stage!

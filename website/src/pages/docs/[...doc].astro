@@ -1,12 +1,14 @@
 ---
 import Layout from '../../layouts/Docs.astro'
+import { ClientRouter } from 'astro:transitions';
 
 import { getCollection, getEntry, render } from "astro:content"
 import type { CollectionEntry } from "astro:content";
 
 export async function getStaticPaths() {
     const allDocs = await getCollection("docs");
-    const mapped = allDocs.map((document: CollectionEntry<"docs">) => ({
+    const mapped = allDocs
+        .map((document: CollectionEntry<"docs">) => ({
         params: {doc: document.id}
     }))
     return mapped
@@ -23,3 +25,4 @@ const { Content } = await render(docContent)
         <Content />
     </div>
 </Layout>
+<ClientRouter />
