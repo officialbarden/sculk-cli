@@ -1,5 +1,6 @@
 ---
 position: 0
+title: "Initializing a Project"
 ---
 
 # Initializing a 'sculk project'

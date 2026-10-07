@@ -1,5 +1,6 @@
 ---
 position: 1
+title: "Installing Libraries"
 ---
 # Installing a sculk library*
 

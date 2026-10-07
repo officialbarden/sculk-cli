@@ -26,19 +26,38 @@
     }
 
     .doc-format {
-        h1 {
-            @apply text-4xl my-5;
+
+        @apply w-full;
+        @apply font-ui;
+
+        .content {
+            @apply md:px-30;
         }
+
+        li {
+            @apply px-2;
+            @apply text-pink-200;
+        }
+        
+        h1 {
+            @apply text-4xl md:mt-10 mb-5 font-tagline;
+        }
+        
         h2 {
-            @apply text-2xl my-2;
+            @apply text-2xl mt-10 mb-5 font-tagline;
         }
 
         p {
-            @apply text-sm;
+            @apply text-sm my-5;
         }
 
+        i {
+            @apply italic;
+        }
+        
         code {
-            @apply p-5 text-sm;
+            @apply font-mono text-sm px-2;
+            @apply text-yellow-500;
         }
     }
 }

@@ -16,13 +16,16 @@ export async function getStaticPaths() {
 
 const { doc } = Astro.params;
 const docContent = await getEntry("docs", doc)
-const { Content } = await render(docContent)
+const { Content } = await render(docContent!)
 
+const title = `${(docContent?.data.title)} | sculk-docs` || "sculk-docs"
 ---
 
-<Layout>
-    <div class="doc-format flex flex-col font-ui p-10 gap-5">
-        <Content />
+<Layout title={title}>
+    <div class="doc-format flex flex-col p-10 gap-5">
+        <div class="content">
+            <Content />
+        </div>
     </div>
 </Layout>
 <ClientRouter />

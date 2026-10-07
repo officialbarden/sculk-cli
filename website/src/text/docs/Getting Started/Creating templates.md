@@ -1,5 +1,6 @@
 ---
 position: 2
+title: "Creating a Template"
 ---
 
 # Templates in sculk
