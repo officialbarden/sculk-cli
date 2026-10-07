@@ -1,5 +1,7 @@
 ---
 import LeftSidebar from "../components/page/Docs/LeftSidebar.astro";
+import RightSidebar from "../components/page/Docs/RightSidebar.astro";
+import Navbar from "../components/page/Docs/Navbar.astro";
 import "../styles/global.css";
 const { title = "sculk-cli docs" } = Astro.props;
 ---
@@ -17,7 +19,13 @@ const { title = "sculk-cli docs" } = Astro.props;
     <body class="page">
         <div class="flex flex-row gap-2 min-h-screen">
             <LeftSidebar />
-            <slot />
+            <div class="flex flex-col">
+                <Navbar />
+                <div class="flex">
+                    <slot />
+                    <RightSidebar />
+                </div>
+            </div>
         </div>
     </body>
 </html>

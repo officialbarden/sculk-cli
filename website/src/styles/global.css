@@ -20,6 +20,27 @@
         @apply min-h-screen;
         background-color: #070606;
     }
+
+    .border-dim {
+        @apply border-white/10;
+    }
+
+    .doc-format {
+        h1 {
+            @apply text-4xl my-5;
+        }
+        h2 {
+            @apply text-2xl my-2;
+        }
+
+        p {
+            @apply text-sm;
+        }
+
+        code {
+            @apply p-5 text-sm;
+        }
+    }
 }
 
 a {
@@ -36,4 +57,3 @@ a {
     font-family: 'Konkhmer Sleokchher Regular';
     src: url("../assets/fonts/KonkhmerSleokchher-Regular.ttf");
 }
-

@@ -1,22 +1,61 @@
 ---
 import wordmark from '../../../assets/images/typography/sculk-cli.png'
-import { getCollection } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
 
 const allDocs = await getCollection('docs')
-console.log(allDocs)
+const grouped = new Map<string, { name: string; href: string }[]>()
+
+for (const doc of allDocs) {
+    const parts = doc.id.split('/')
+    const slug = parts.at(-1)!                                   
+    const category = parts.length > 1 ? parts.at(-2)! : 'general' 
+
+    if (!grouped.has(category)) grouped.set(category, [])
+
+    grouped.get(category)!.push({
+        name: (doc.data as any).title ?? prettify(slug),
+        href: `/docs/${doc.id}`,
+    })
+}
+function prettify(str: string) {
+    return str
+        .replace(/[-_]/g, ' ')
+        .replace(/\b\w/g, (c) => c.toUpperCase())
+}
+
+const categories = [...grouped.entries()]
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([name, subsections]) => ({
+        name: prettify(name),
+        subsections: subsections.sort((a, b) => a.name.localeCompare(b.name)),
+    }))
 ---
 
-<div class="hidden md:flex flex-col pl-80 min-h-full font-ui border border-white/10">
+<div class="hidden md:flex flex-col min-w-60 max-w-200 min-h-full font-ui border border-dim">
 
-    <div class="flex flex-col gap-5 p-5">
-        <div>
+    <div class="flex flex-col gap-5 p-5 sticky top-0">
+        <a class="justify-items-center w-full" href="/">
             <img src={wordmark.src} class="w-30">
             <h1>Documentation</h1>
-        </div>
+        </a>
 
         <!-- documentation buttons -->
-        <div>
-            
+        <div class="text-white font-ui text-left">
+            {categories.map((category) => (
+                <div class="my-7">
+                    <h1 class="opacity-40 text-[15px]">{category.name}</h1>
+
+                    <div class="my-2.5 flex flex-col gap-1">
+                        {category.subsections.map((subsection) => {
+                            return(
+                                <a href={subsection.href} class="px-2 py-1 hover:bg-white/10">
+                                    <h1 class="text-[12px]">{subsection.name}</h1>
+                                </a>
+                            )
+                        })}
+                    </div>
+                </div>
+            ))}
         </div>
     </div>
     
