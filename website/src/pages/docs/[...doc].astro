@@ -1,0 +1,26 @@
+---
+import Layout from '../../layouts/Docs.astro'
+
+import { getCollection, getEntry, render } from "astro:content"
+import type { CollectionEntry } from "astro:content";
+
+export async function getStaticPaths() {
+    const allDocs = await getCollection("docs");
+    const mapped = allDocs.map((document: CollectionEntry<"docs">) => ({
+        params: {doc: document.id}
+    }))
+    return mapped
+}
+
+const { doc } = Astro.params;
+console.log(doc)
+const docContent = await getEntry("docs", doc)
+const { Content } = await render(docContent)
+
+---
+
+<Layout>
+    <div class="flex flex-col p-5 gap-5">
+        <Content />
+    </div>
+</Layout>

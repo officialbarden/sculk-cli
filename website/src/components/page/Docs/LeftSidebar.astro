@@ -1,0 +1,23 @@
+---
+import wordmark from '../../../assets/images/typography/sculk-cli.png'
+import { getCollection } from 'astro:content';
+
+const allDocs = await getCollection('docs')
+console.log(allDocs)
+---
+
+<div class="hidden md:flex flex-col pl-80 min-h-full font-ui border border-white/10">
+
+    <div class="flex flex-col gap-5 p-5">
+        <div>
+            <img src={wordmark.src} class="w-30">
+            <h1>Documentation</h1>
+        </div>
+
+        <!-- documentation buttons -->
+        <div>
+            
+        </div>
+    </div>
+    
+</div>
