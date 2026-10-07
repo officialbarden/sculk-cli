@@ -1,7 +1,7 @@
 package initProject
 
 import (
-	"sculk-cli/src/commands/initProject/create"
+	"sculk/src/commands/initProject/create"
 )
 
 // sculk init [projectName] [projectVersion]

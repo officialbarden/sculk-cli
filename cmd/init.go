@@ -1,10 +1,10 @@
 /*
-Copyright © 2026 barden <theofficialbarden@gmail.com>
+Copyright © 2026 BARDEN <theofficialbarden@gmail.com>
 */
 package cmd
 
 import (
-	"sculk-cli/src/commands/initProject"
+	"sculk/src/commands/initProject"
 	"github.com/spf13/cobra"
 )
 

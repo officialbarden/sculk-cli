@@ -1,10 +1,10 @@
 /*
-Copyright © 2026 NAME HERE <EMAIL ADDRESS>
+Copyright © 2026 BARDEN <theofficialbarden@gmail.com>
 */
 package cmd
 
 import (
-	"sculk-cli/src/commands/config"
+	"sculk/src/commands/config"
 
 	"github.com/spf13/cobra"
 )
@@ -18,7 +18,7 @@ params:
 
 doMerge: true/false
 author: { name: string }
-	
+
 	`,
 	Run: func(cmd *cobra.Command, args []string) {
 		config.Main(args)

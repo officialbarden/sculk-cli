@@ -4,8 +4,8 @@ Copyright © 2026 NAME HERE <EMAIL ADDRESS>
 package main
 
 import (
-	"sculk-cli/cmd"
-	"sculk-cli/src/commands/config"
+	"sculk/cmd"
+	"sculk/src/commands/config"
 )
 
 func main() {

@@ -4,9 +4,9 @@
 package update
 
 import (
-	"sculk-cli/src/commands/add"
-	"sculk-cli/src/commands/initProject/create"
-	"sculk-cli/src/commands/uninstall"
+	"sculk/src/commands/add"
+	"sculk/src/commands/initProject/create"
+	"sculk/src/commands/uninstall"
 
 	"charm.land/log/v2"
 	"github.com/go-git/go-billy/v6"

@@ -6,7 +6,7 @@ import (
 	"io"
 	"os"
 	"path/filepath"
-	"sculk-cli/src/commands/initProject/create"
+	"sculk/src/commands/initProject/create"
 	"slices"
 	"strings"
 

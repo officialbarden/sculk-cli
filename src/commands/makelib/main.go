@@ -1,7 +1,7 @@
 package makelib
 
 import (
-	"sculk-cli/src/commands/initProject/create"
+	"sculk/src/commands/initProject/create"
 )
 
 func Main(args []string) {

@@ -2,7 +2,7 @@
 package add
 
 import (
-	"sculk-cli/src/commands/initProject/create"
+	"sculk/src/commands/initProject/create"
 )
 
 type libraryBlock struct {

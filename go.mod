@@ -1,4 +1,4 @@
-module sculk-cli
+module sculk
 
 go 1.27.0
 

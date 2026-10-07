@@ -1,6 +1,5 @@
 /*
 Copyright © 2026 BARDEN <theofficialbarden@gmail.com>
-
 */
 package cmd
 

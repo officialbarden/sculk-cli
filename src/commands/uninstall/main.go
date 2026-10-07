@@ -5,7 +5,7 @@ import (
 	"io"
 	"os"
 	"path/filepath"
-	"sculk-cli/src/commands/add"
+	"sculk/src/commands/add"
 	"strings"
 
 	"charm.land/log/v2"
@@ -27,7 +27,7 @@ func UninstallLibrary(libraryIdentifier string) {
 	// drop repo-link and librariesjson information
 	_, _, sourceCodeFilesystem, err := add.GetLibrarySource(libraryIdentifier)
 	if err != nil {panic(err)}
-	
+
 	getWorkingDir, err := os.Getwd()
 	// start from '/'
 	err = TraverseSourceCode(sourceCodeFilesystem, "/", getWorkingDir)
@@ -60,7 +60,7 @@ func TraverseSourceCode(fs billy.Filesystem, currentPath string, targetDir strin
 				"pack.mcmeta",
 				"README.md",
 			}
-			
+
 			err := handleFileDeletion(fs, memoryPath, localPath, blacklistedFiles)
 			if err != nil {
 				panic(err)

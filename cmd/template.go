@@ -4,7 +4,7 @@ Copyright © 2026 BARDEN <theofficialbarden@gmail.com>
 package cmd
 
 import (
-	"sculk-cli/src/commands/template"
+	"sculk/src/commands/template"
 
 	"github.com/spf13/cobra"
 )

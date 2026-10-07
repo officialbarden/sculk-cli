@@ -1,12 +1,11 @@
 /*
-Copyright © 2026 NAME HERE <EMAIL ADDRESS>
-
+Copyright © 2026 BARDEN <theofficialbarden@gmail.com>
 */
 package cmd
 
 import (
 	"github.com/spf13/cobra"
-	"sculk-cli/src/commands/makelib"
+	"sculk/src/commands/makelib"
 )
 
 // makelibCmd represents the makelib command
