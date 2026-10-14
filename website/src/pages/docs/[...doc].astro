@@ -19,7 +19,13 @@ const docContent = await getEntry("docs", doc)
 const { Content } = await render(docContent!)
 
 const title = `${(docContent?.data.title)} | sculk-docs` || "sculk-docs"
+
 ---
+
+<script>
+    import { isSidebarToggled } from '../../store.svelte';
+    isSidebarToggled.set(false)
+</script>
 
 <Layout title={title}>
     <div class="doc-format flex flex-col p-10 gap-5">
