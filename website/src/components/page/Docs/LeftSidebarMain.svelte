@@ -7,7 +7,6 @@
     let displaySidebar = isSidebarToggled
     let open = $derived(displaySidebar.get())
 
-    // Animate Sidebar
 </script>
 
 <div
@@ -33,7 +32,6 @@
     </div>
 </div>
 
-<!-- Desktop: sticky column -->
 <div class="hidden md:block">
     <div class="
         sticky top-0 h-screen overflow-y-auto
