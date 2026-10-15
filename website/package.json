@@ -17,6 +17,7 @@
     "astro": "^7.3.3",
     "astro-icon": "^1.2.0",
     "astro-iconset": "^0.0.6",
+    "fuse.js": "^7.5.0",
     "svelte": "^5.57.0",
     "tailwindcss": "^4.3.3",
     "typescript": "^6.0.3"

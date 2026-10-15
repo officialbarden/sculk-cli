@@ -9,6 +9,8 @@
     --color-secondary-dark: #1e1a4d;
 
     --color-select: #1e1a4d;
+
+    --radius-ui: 8px;
 }
 
 @layer {
@@ -28,14 +30,35 @@
     }
 
     .doc-format {
-
+        
         @apply w-full;
         @apply font-ui;
 
         .content {
-            @apply md:px-30;
-        }
-
+                @apply md:px-30;
+                @apply min-w-0 max-w-full;
+                overflow-wrap: anywhere;
+            }
+        
+            pre {
+                @apply max-w-full overflow-x-auto my-5 p-4;
+            }
+        
+            /* code inside pre shouldn't wrap, it should scroll */
+            pre code {
+                @apply px-0;
+                overflow-wrap: normal;
+                white-space: pre;
+            }
+        
+            table {
+                @apply block max-w-full overflow-x-auto;
+            }
+        
+            img, video, iframe {
+                @apply max-w-full h-auto;
+            }
+            
         li {
             @apply px-2;
             @apply text-pink-200;

@@ -29,9 +29,9 @@ const title = `${(docContent?.data.title)} | sculk-docs` || "sculk-docs"
 
 <Layout title={title}>
     <div class="doc-format flex flex-col p-10 gap-5">
-        <div class="content">
+        <div class="content min-w-0 max-w-full">
             <Content />
         </div>
     </div>
 </Layout>
-<ClientRouter />
+<!-- <ClientRouter /> -->
